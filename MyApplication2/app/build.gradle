@@ -1,0 +1,177 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.palantir.jacoco-coverage'
+apply plugin: 'jacoco'
+//apply plugin: "jacoco-android"
+
+
+//jacoco {
+//    toolVersion = '0.8.3' //Use latest version
+//    reportsDir = file("$buildDir/customJacocoReportDir")
+//}---worked
+
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+//buildscript {
+//    repositories {
+//        jcenter()
+//    }
+//    dependencies {
+//        classpath 'com.palantir:jacoco-coverage:0.4.0'
+//        classpath 'org.jacoco:org.jacoco.agent:0.8.1'
+//        classpath 'org.jacoco:org.jacoco.core:0.8.1'
+//    }
+//}
+
+android {
+
+    sourceSets {
+        main {
+            resources.includes = ['**/jacoco-agent.properties']
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "suram.sridhar"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    sourceSets {
+        main {
+            resources.includes = ['**/jacoco-agent.properties']
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            testCoverageEnabled = true
+            testCoverageEnabled true
+            debuggable true
+
+        }
+        debug {
+            testCoverageEnabled true
+            debuggable true
+            minifyEnabled false
+
+        }
+    }
+
+}
+
+
+
+def coverageSourceDirs = [
+        './src/main/java'
+]
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir:'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
+
+    ///-----worked-----
+    // https://mvnrepository.com/artifact/com.palantir/jacoco-coverage
+  /compile group: 'com.palantir', name: 'jacoco-coverage', version: '0.4.0'
+    testCompile group: 'com.palantir', name: 'jacoco-coverage', version: '0.4.0'
+    compile group: 'org.jacoco', name: 'org.jacoco.core', version: '0.8.1'
+    testCompile group: 'org.jacoco', name: 'org.jacoco.core', version: '0.8.1'
+
+    testCompile group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.1'
+
+    ///-----worked----- done---
+
+
+//    implementation 'org.jacoco:org.jacoco.agent:0.8.1:runtime'
+
+//    classpath 'org.jacoco:org.jacoco.core:0.8.1'
+//    classpath 'org.jacoco:org.jacoco.agent:0.8.1'
+//    classpath 'com.palantir:jacoco-coverage:0.4.0'
+
+//    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+
+//defaultConfig {
+//    applicationId "suram.sridhar"
+//
+//    // Specify the default test runner.
+//    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//
+//    javaCompileOptions {
+//        annotationProcessorOptions {
+//            includeCompileClasspath false
+//        }
+//    }
+//}
+
+task jacocoTestReport(type: JacocoReport) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    classDirectories = fileTree(
+            dir: './build/intermediates/classes/debug',
+            excludes: ['**/R*.class',
+                       '**/*$InjectAdapter.class',
+                       '**/*$ModuleAdapter.class',
+                       '**/*$ViewInjector*.class'
+            ])
+    sourceDirectories = files(coverageSourceDirs)
+    // NOTE: Put your ec file here
+    executionData = files("/Users/ssuram/Documents/AutomationRepo/codecoverage/coverage.ec")
+
+    doFirst {
+        new File("$buildDir/intermediates/classes/").eachFileRecurse { file ->
+            if (file.name.contains('$$')) {
+                file.renameTo(file.path.replace('$$', '$'))
+            }
+        }
+    }
+}
+
+task jacocoTestReport2(type: JacocoReport) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    classDirectories = fileTree(
+            dir: '/Users/ssuram/Downloads/Slidr-master/MyApplication2/app/build/intermediates/javac/debug/classes/suram/sridhar',
+            excludes: ['**/R*.class',
+                       '**/*$InjectAdapter.class',
+                       '**/*$ModuleAdapter.class',
+                       '**/*$ViewInjector*.class'
+            ])
+    sourceDirectories = files(coverageSourceDirs)
+    // NOTE: Put your ec file here
+    executionData = files("/Users/ssuram/Documents/AutomationRepo/codecoverage/coverage.ec"
+//            "/Users/ssuram/Documents/e2.ec", "/Users/ssuram/Documents/dwappconnect22.ec"
+    )
+
+    doFirst {
+        new File("$buildDir/intermediates/javac/debug").eachFileRecurse { file ->
+            if (file.name.contains('$$')) {
+                file.renameTo(file.path.replace('$$', '$'))
+            }
+        }
+    }
+}
