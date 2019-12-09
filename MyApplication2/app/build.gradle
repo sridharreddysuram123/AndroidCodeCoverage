@@ -87,7 +87,7 @@ task jacocoTestReport(type: JacocoReport) {
         html.enabled = true
     }
     classDirectories = fileTree(
-            dir: '/Users/ssuram/Downloads/Slidr-master/MyApplication2/app/build/intermediates/javac/debug/classes/suram/sridhar',
+            dir: '/Users/ssuram/Documents/AutomationRepo/personal/AndroidCodeCoverage/MyApplication2/app/build/intermediates/javac/debug/classes/suram/sridhar',
             excludes: ['**/R*.class',
                        '**/*$InjectAdapter.class',
                        '**/*$ModuleAdapter.class',
@@ -95,8 +95,8 @@ task jacocoTestReport(type: JacocoReport) {
             ])
     sourceDirectories = files(coverageSourceDirs)
     // NOTE: Put your ec file here
-    executionData = files("/Users/ssuram/CodeCoverage/codecoverage/codeCoverageFiles/coverage.ec"
-            //, "/Users/ssuram/Documents/AutomationRepo/codecoverage/coverage22.ec"
+    executionData = files("/Users/ssuram/Documents/AutomationRepo/personal/appiumUItestWithCodeCoverage/appiumUItestsWithCodeCoverage/codeCoverageFiles/coverage.ec"
+            //, "/Users/ssuram/Documents/AutomationRepo/personal/appiumUItestWithCodeCoverage/appiumUItestsWithCodeCoverage/codeCoverageFiles/coverage22.ec"
     )
 
     doFirst {
