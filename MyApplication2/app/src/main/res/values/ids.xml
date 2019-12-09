@@ -1,0 +1,7 @@
+<resources>
+    <item name="number1" type="id"/>
+    <item name="number2" type="id"/>
+    <item name="result" type="id"/>
+    <item name="sum" type="id"/>
+    <item name="subtract" type="id"/>
+</resources>

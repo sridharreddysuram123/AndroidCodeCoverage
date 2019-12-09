@@ -1,29 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.palantir.jacoco-coverage'
 apply plugin: 'jacoco'
-//apply plugin: "jacoco-android"
-
-
-//jacoco {
-//    toolVersion = '0.8.3' //Use latest version
-//    reportsDir = file("$buildDir/customJacocoReportDir")
-//}---worked
 
 jacoco {
     toolVersion = "0.8.5"
     reportsDir = file("$buildDir/customJacocoReportDir")
 }
-
-//buildscript {
-//    repositories {
-//        jcenter()
-//    }
-//    dependencies {
-//        classpath 'com.palantir:jacoco-coverage:0.4.0'
-//        classpath 'org.jacoco:org.jacoco.agent:0.8.1'
-//        classpath 'org.jacoco:org.jacoco.core:0.8.1'
-//    }
-//}
 
 android {
 
@@ -94,60 +76,10 @@ dependencies {
     testCompile group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.1'
 
     ///-----worked----- done---
-
-
-//    implementation 'org.jacoco:org.jacoco.agent:0.8.1:runtime'
-
-//    classpath 'org.jacoco:org.jacoco.core:0.8.1'
-//    classpath 'org.jacoco:org.jacoco.agent:0.8.1'
-//    classpath 'com.palantir:jacoco-coverage:0.4.0'
-
-//    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
-
-//defaultConfig {
-//    applicationId "suram.sridhar"
-//
-//    // Specify the default test runner.
-//    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//
-//    javaCompileOptions {
-//        annotationProcessorOptions {
-//            includeCompileClasspath false
-//        }
-//    }
-//}
 
 task jacocoTestReport(type: JacocoReport) {
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports after running tests."
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-    classDirectories = fileTree(
-            dir: './build/intermediates/classes/debug',
-            excludes: ['**/R*.class',
-                       '**/*$InjectAdapter.class',
-                       '**/*$ModuleAdapter.class',
-                       '**/*$ViewInjector*.class'
-            ])
-    sourceDirectories = files(coverageSourceDirs)
-    // NOTE: Put your ec file here
-    executionData = files("/Users/ssuram/Documents/AutomationRepo/codecoverage/coverage.ec")
-
-    doFirst {
-        new File("$buildDir/intermediates/classes/").eachFileRecurse { file ->
-            if (file.name.contains('$$')) {
-                file.renameTo(file.path.replace('$$', '$'))
-            }
-        }
-    }
-}
-
-task jacocoTestReport2(type: JacocoReport) {
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
     reports {
@@ -163,8 +95,8 @@ task jacocoTestReport2(type: JacocoReport) {
             ])
     sourceDirectories = files(coverageSourceDirs)
     // NOTE: Put your ec file here
-    executionData = files("/Users/ssuram/Documents/AutomationRepo/codecoverage/coverage.ec"
-//            "/Users/ssuram/Documents/e2.ec", "/Users/ssuram/Documents/dwappconnect22.ec"
+    executionData = files("/Users/ssuram/CodeCoverage/codecoverage/codeCoverageFiles/coverage.ec"
+            //, "/Users/ssuram/Documents/AutomationRepo/codecoverage/coverage22.ec"
     )
 
     doFirst {

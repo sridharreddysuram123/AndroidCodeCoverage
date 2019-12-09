@@ -7,27 +7,7 @@ buildscript {
         
     }
     dependencies {
-
-//        classpath 'com.android.tools.build:gradle:3.4.2'
         classpath 'com.android.tools.build:gradle:3.5.2'
-
-//        classpath 'com.android.tools.build:gradle:3.4.2' worked with 0.8.1
-
-//        classpath 'com.palantir:jacoco-coverage:0.4.0' worked
-//        classpath 'org.jacoco:org.jacoco.core:0.8.1' worked
-
-
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-
-//        classpath 'org.jacoco:org.jacoco.agent:0.8.1'
-//        classpath 'com.palantir:jacoco-coverage:0.4.0'
-//        classpath 'org.jacoco:org.jacoco.core:0.8.1'
-//        classpath 'org.jacoco:org.jacoco.agent:0.8.1'
-
-
-
         classpath 'org.jacoco:org.jacoco.core:0.8.5'
         classpath 'org.jacoco:org.jacoco.agent:0.8.5'
         classpath 'com.palantir:jacoco-coverage:0.4.0'
